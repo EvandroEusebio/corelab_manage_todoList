@@ -8,7 +8,7 @@ function Search({ className }: React.ComponentProps<"search">) {
     return (
         <div className={`flex items-center gap-2 border-1 border-gray-300  ${className}`}>
             <Input
-                placeholder="Pesquisar notas"
+                placeholder="Pesquisar notas" 
                 type="text"
                 className="border-0 w-full focus-visible:border-none focus-visible:ring-[none]  text-[9px] text-[#4F4F4D]"
             />
