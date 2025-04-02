@@ -12,7 +12,26 @@ interface HandlePopoverChangeProps {
   open: boolean;
 }
 
-function PaletteColor() {
+interface PaletteColorProps {
+  onChangeColorCard: (color: string) => void;
+}
+
+const colorOptions = [
+  "#ffffff",
+  "#BAE2FF",
+  "#B9FFDD",
+  "#FFE8AC",
+  "#FFCAB9",
+  "#F99494",
+  "#ECA1FF",
+  "#DAFF8B",
+  "#FFA285",
+  "#CDCDCD",
+  "#979797",
+  "#A99A7C",
+];
+
+function PaletteColor({ onChangeColorCard }: PaletteColorProps) {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const handlePopoverChange = (open: HandlePopoverChangeProps["open"]) => {
@@ -30,14 +49,16 @@ function PaletteColor() {
           <ColorIcon className="w-4 h-4 " color="#FFA000" />
         </Toggle>
       </PopoverTrigger>
-      <PopoverContent side="bottom" align="start" className="w-64 sm:w-96">
-        <div className="flex gap-2 flex-wrap justify-between">
-          <div className="w-9 h-9 bg-[#FFE3B3] rounded-full cursor-pointer"></div>
-          <div className="w-9 h-9 bg-[#FFB74D] rounded-full cursor-pointer"></div>
-          <div className="w-9 h-9 bg-[#FFA000] rounded-full cursor-pointer"></div>
-          <div className="w-9 h-9 bg-[#FF8F00] rounded-full cursor-pointer"></div>
-          <div className="w-9 h-9 bg-[#FF6F00] rounded-full cursor-pointer"></div>
-          <div className="w-9 h-9 bg-[#FF5722] rounded-full cursor-pointer"></div>
+      <PopoverContent side="bottom" align="start" className="w-64 sm:w-lg">
+        <div className="flex gap-2 flex-wrap justify-start">
+          {colorOptions.map((color) => (
+            <div
+              key={color}
+              className="w-9 h-9 rounded-full cursor-pointer "
+              style={{ backgroundColor: color }}
+              onClick={() => onChangeColorCard(color)}
+            ></div>
+          ))}
         </div>
       </PopoverContent>
     </Popover>
