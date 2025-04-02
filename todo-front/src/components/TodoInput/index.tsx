@@ -30,7 +30,7 @@ function TodoInput() {
       <div>
         <Textarea
           placeholder="Criar nota"
-          className="border-none px-4 focus-visible:border-none focus-visible:ring-[none] resize-none font-light"
+          className="border-none px-4 text-[13px] focus-visible:border-none focus-visible:ring-[none] resize-none font-light"
         />
       </div>
     </div>

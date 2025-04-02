@@ -10,7 +10,7 @@ function Search({ className }: React.ComponentProps<"search">) {
             <Input
                 placeholder="Pesquisar notas" 
                 type="text"
-                className="border-0 w-full focus-visible:border-none focus-visible:ring-[none]  text-[9px] text-[#4F4F4D]"
+                className="border-0 w-full focus-visible:border-none focus-visible:ring-[none]  text-[13px]  text-[#4F4F4D]"
             />
             <Button variant="ghost" className="hover:bg-[none] hover:text-[none] cursor-pointer">
                 <SearchIcon className="w-[13px] h-[13px]" color="#9E9E9E" />
