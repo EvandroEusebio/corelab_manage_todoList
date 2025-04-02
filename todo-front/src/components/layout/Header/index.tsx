@@ -4,7 +4,7 @@ import XIcon from "@/assets/icons/xIcon";
 
 function Header() {
   return (
-    <header className="bg-white shadow-sm shadow-[#95959540] py-4  lg:px-20 px-6">
+    <header className="bg-white shadow-sm shadow-[#95959540] py-4  lg:px-20 px-4">
       <div className="flex items-center justify-between gap-4 max-w-screen-xl mx-auto">
         <div className="flex items-center gap-4 flex-1/2">
           <LogoIcon />
