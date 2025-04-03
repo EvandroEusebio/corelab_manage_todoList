@@ -5,10 +5,17 @@ import XIcon from "@/assets/icons/xIcon";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 import PaletteColor from "../PaletteColor";
+import { TodoListInterface } from "@/types/todo_list_type";
 
-export function TodoCard() {
-  const [isFavorite, setIfavorite] = useState(false);
-  const [colorCard, setColorCard] = useState("#ffff");
+export function TodoCard({
+  id,
+  title,
+  color,
+  notes,
+  is_favorited,
+}: TodoListInterface) {
+  const [isFavorite, setIfavorite] = useState(is_favorited);
+  const [colorCard, setColorCard] = useState(color);
 
   const handleFavorite = () => {
     setIfavorite(!isFavorite);
@@ -21,7 +28,7 @@ export function TodoCard() {
     >
       <div className="flex items-center border-b-1 pb-4 px-4 justify-between">
         <CardTitle className="font-bold text-[14px] text-[#4F4F4D]">
-          Título
+          {title}
         </CardTitle>
         <StarIcon
           className="w-4 h-4 cursor-pointer"
@@ -32,18 +39,13 @@ export function TodoCard() {
 
       <CardContent className="h-80 font-normal px-4 text-[13px]">
         <div>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio animi
-            doloribus, placeat ex laudantium perspiciatis distinctio maxime sed
-            reiciendis, ad assumenda voluptate. Nesciunt quibusdam ad officia
-            ducimus blanditiis quia recusandae?
-          </p>
+          <p>{notes}</p>
         </div>
       </CardContent>
       <CardFooter className="flex justify-between">
         <div className="flex gap-3 items-center">
           <PencilIcon className="w-4 h-4 cursor-pointer" />
-          <PaletteColor onChangeColorCard={setColorCard}/>
+          <PaletteColor onChangeColorCard={setColorCard} />
         </div>
         <XIcon className="w-[13px] h-[13px] cursor-pointer" color="#9E9E9E" />
       </CardFooter>

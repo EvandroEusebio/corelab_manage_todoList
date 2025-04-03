@@ -1,5 +1,5 @@
 import TodoInput from "@/components/TodoInput";
-import Home from "./Dashboard";
+import Home from "./dashboard";
 
 export default function Index() {
   return (
