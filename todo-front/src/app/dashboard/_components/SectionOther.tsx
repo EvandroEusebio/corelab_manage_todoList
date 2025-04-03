@@ -1,32 +1,19 @@
 "use client";
 import { TodoCard } from "@/components/TodoCard";
 import { TodoCardSkeleton } from "@/components/TodoCard/skeleton";
-import getTodoLists from "@/service/routesAPI/todoList/all";
-import { TodoListInterface } from "@/types/todo_list_type";
-import { useEffect, useState } from "react";
+import useTodoListStore from "@/features/store/todoListStore";
 
 function SectionOther() {
-  const [todoLists, setTodoLists] = useState<TodoListInterface[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { loading, todoList } = useTodoListStore();
+  
 
-  useEffect(() => {
-    setIsLoading(true);
-    getTodoLists()
-      .then((response) => {
-        console.log("Todo Lists:", response.data.lists);
-        setTodoLists(response.data.lists);
-      })
-      .catch((error) => {
-        console.error("Error fetching todo lists:", error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+  // filter out the favorite lists
+  const filteredTodoList = todoList.filter((list) => !list.isFavorited);
+
   return (
     <div className="space-y-1.5">
       <div className="max-w-screen-xl mx-auto">
-        {isLoading ? (
+        {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-6  justify-items-center-safe">
             <TodoCardSkeleton />
             <TodoCardSkeleton />
@@ -36,20 +23,20 @@ function SectionOther() {
           <>
             <h2>Outras</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-6  justify-items-center-safe">
-              {todoLists.length > 0 ? (
-                todoLists.map((todoList) => (
+              {filteredTodoList.length > 0 ? (
+                filteredTodoList.map((list) => (
                   <TodoCard
-                    key={todoList.id}
-                    id={todoList.id}
-                    title={todoList.title}
-                    color={todoList.color}
-                    notes={todoList.notes}
-                    is_favorited={todoList.is_favorited}
+                    key={list.id}
+                    id={list.id}
+                    title={list.title}
+                    color={list.color}
+                    notes={list.notes}
+                    is_favorited={list.isFavorited}
                   />
                 ))
               ) : (
                 <div className="flex items-center justify-center">
-                  <p>No Todo Lists Available</p>
+                  <p>Nenhuma Lista</p>
                 </div>
               )}
             </div>
