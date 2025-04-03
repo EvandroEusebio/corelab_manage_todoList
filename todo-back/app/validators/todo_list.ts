@@ -9,7 +9,7 @@ export const createTodoListValidator = vine.compile(
     title: vine.string().minLength(1).maxLength(255),
     notes: vine.string().minLength(1).maxLength(1000),
     color: vine.string().regex(/^#[0-9A-F]{6}$/i),
-    isFavorite: vine.boolean().optional(),
+    is_favorited: vine.boolean().optional(),
   })
 )
 
@@ -21,7 +21,10 @@ export const updateTodoListValidator = vine.compile(
   vine.object({
     title: vine.string().minLength(1).maxLength(255).optional(),
     notes: vine.string().minLength(1).maxLength(1000).optional(),
-    color: vine.string().regex(/^#[0-9A-F]{6}$/i).optional(),
-    isFavorite: vine.boolean().optional(),
+    color: vine
+      .string()
+      .regex(/^#[0-9A-F]{6}$/i)
+      .optional(),
+    is_favorited: vine.boolean().optional(),
   })
 )

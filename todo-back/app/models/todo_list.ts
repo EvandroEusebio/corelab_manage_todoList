@@ -17,8 +17,8 @@ export default class TodoList extends BaseModel {
   @column()
   declare color: string
   
-  @column()
-  declare isFavorite: boolean
+  @column({serialize: Boolean})
+  declare is_favorited: boolean
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime

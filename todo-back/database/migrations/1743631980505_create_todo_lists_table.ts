@@ -7,9 +7,9 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.string('title').notNullable()
-      table.string('notes').notNullable()
+      table.text('notes').notNullable()
       table.string('color').notNullable().defaultTo('#ffffff')
-      table.enum('is_favorite', ['0', '1']).notNullable().defaultTo('0')
+      table.boolean('is_favorited').defaultTo(false)
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })
