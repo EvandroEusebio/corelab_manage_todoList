@@ -3,11 +3,12 @@ import PencilIcon from "@/assets/icons/pencilIcon";
 import StarIcon from "@/assets/icons/starIcon";
 import XIcon from "@/assets/icons/xIcon";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
-import { useState } from "react";
-import PaletteColor from "../PaletteColor";
-import { TodoListInterface } from "@/types/todo_list_type";
 import editTodoList from "@/service/routesAPI/todoList/edit";
+import { TodoListInterface } from "@/types/todo_list_type";
+import { useState } from "react";
 import { toast } from "sonner";
+import PaletteColor from "../PaletteColor";
+import deleteTodoList from "@/service/routesAPI/todoList/delete";
 
 export function TodoCard({
   id,
@@ -33,13 +34,25 @@ export function TodoCard({
       id
     )
       .then((res) => {
-        if (res.status === 200) {
-          toast.success("Cor da task editada com sucesso!");
-        }
+        console.log("Todo list color updated:", res.statusText);
+        toast.success("Cor da task editada com sucesso!");
       })
       .catch((error) => {
         console.error("Error updating todo list color:", error);
         setColorCard("#FFFFFF");
+      });
+  };
+
+  const handleDeleteTodoList = async () => {
+    await deleteTodoList(id)
+      .then((response) => {
+        console.log("Task deleted:", response.statusText);
+        toast.success("Task deleted with sucess!");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error deleting task:", error);
+        toast.error("Error deleting task");
       });
   };
 
@@ -69,7 +82,11 @@ export function TodoCard({
           <PencilIcon className="w-4 h-4 cursor-pointer" />
           <PaletteColor onChangeColorCard={handleEditColorTodoList} />
         </div>
-        <XIcon className="w-[13px] h-[13px] cursor-pointer" color="#9E9E9E" />
+        <XIcon
+          className="w-[13px] h-[13px] cursor-pointer"
+          color="#9E9E9E"
+          onClick={() => handleDeleteTodoList()}
+        />
       </CardFooter>
     </Card>
   );
