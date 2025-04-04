@@ -6,6 +6,8 @@ import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 import PaletteColor from "../PaletteColor";
 import { TodoListInterface } from "@/types/todo_list_type";
+import editTodoList from "@/service/routesAPI/todoList/edit";
+import { toast } from "sonner";
 
 export function TodoCard({
   id,
@@ -19,6 +21,26 @@ export function TodoCard({
 
   const handleFavorite = () => {
     setIfavorite(!isFavorite);
+  };
+
+  // edite color todo list
+  const handleEditColorTodoList = async (color: string) => {
+    setColorCard(color);
+    await editTodoList(
+      {
+        color: color,
+      },
+      id
+    )
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("Cor da task editada com sucesso!");
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating todo list color:", error);
+        setColorCard("#FFFFFF");
+      });
   };
 
   return (
@@ -45,7 +67,7 @@ export function TodoCard({
       <CardFooter className="flex justify-between">
         <div className="flex gap-3 items-center">
           <PencilIcon className="w-4 h-4 cursor-pointer" />
-          <PaletteColor onChangeColorCard={setColorCard} />
+          <PaletteColor onChangeColorCard={handleEditColorTodoList} />
         </div>
         <XIcon className="w-[13px] h-[13px] cursor-pointer" color="#9E9E9E" />
       </CardFooter>
