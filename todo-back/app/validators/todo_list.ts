@@ -8,7 +8,10 @@ export const createTodoListValidator = vine.compile(
   vine.object({
     title: vine.string().minLength(1).maxLength(255),
     notes: vine.string().minLength(1).maxLength(1000),
-    color: vine.string().regex(/^#[0-9A-F]{6}$/i),
+    color: vine
+      .string()
+      .regex(/^#[0-9A-F]{6}$/i)
+      .optional(),
     is_favorited: vine.boolean().optional(),
   })
 )
