@@ -98,7 +98,7 @@ npm run dev ou pnpm run dev
 
 ```bash
    git clone https://github.com/EvandroEusebio/corelab_manage_todoList.git
-   cd /todo-front
+   cd todo-front
 ```
 
 2. Instale as dependencias
