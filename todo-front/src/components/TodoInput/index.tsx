@@ -84,7 +84,7 @@ function TodoInput() {
               <FormItem>
                 <FormControl>
                   <Input
-                    placeholder="Pesquisar notas"
+                    placeholder="Título"
                     type="text"
                     {...field}
                     className="border-0 w-full focus-visible:border-none focus-visible:ring-[none] p-0 text-[14px] font-bold text-[#333333]"
