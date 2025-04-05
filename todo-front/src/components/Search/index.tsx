@@ -1,9 +1,8 @@
 "use client";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import SearchIcon from "@/assets/icons/searchIcon";
 import { useRouter } from "next/navigation";
-import { useState, ComponentProps, ChangeEvent } from "react";
+import { ChangeEvent, ComponentProps, useState } from "react";
+import { Input } from "../ui/input";
 
 function Search({ className }: ComponentProps<"search">) {
   const router = useRouter();

@@ -11,6 +11,7 @@ import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 // Definir o esquema de validação com Zod
 const todoSchema = z.object({
@@ -24,6 +25,9 @@ type TodoFormData = z.infer<typeof todoSchema>;
 function TodoInput() {
   const [isFavorite, setIfavorite] = useState(false);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   // Configurar o React Hook Form com Zod
   const todoForm = useForm<z.infer<typeof todoSchema>>({
@@ -58,8 +62,8 @@ function TodoInput() {
       .then((response) => {
         console.log(response.statusText);
         toast.success("Lista de tarefa criada com sucesso!");
+        window.history.replaceState(null, "", "/"); // clean search params
         window.location.reload();
-        todoForm.reset();
       })
       .catch((error) => {
         console.error("Erro ao criar a lista de tarefas:", error);
