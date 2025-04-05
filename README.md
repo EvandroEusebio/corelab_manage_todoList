@@ -67,7 +67,9 @@ Clone o repositório:
 2. Instale as dependencias
 
 ```bash
-   npm install ou pnpm install
+   npm install 
+   ou 
+   pnpm install
 ```
 
 3. crie o arquivo .env e adicione o seguinte script:
@@ -95,7 +97,9 @@ node ace migration:run
 5. Inicie o servidor
 
 ```bash
-npm run dev ou pnpm run dev
+npm run dev 
+ou 
+pnpm run dev
 ```
 
 
