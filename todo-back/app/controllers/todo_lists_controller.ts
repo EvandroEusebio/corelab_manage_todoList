@@ -7,12 +7,29 @@ export default class TodoListsController {
   /**
    * Display a list of resource
    */
-  async index({ response }: HttpContext) {
-    // Fetch all todo lists
-    const lists = await TodoList.all()
+  async index({ response, request }: HttpContext) {
+    try {
+      // Get the search query from the request
+      const { q } = request.qs()
+      // If there is a search query, search for todo lists
+      if (q) {
+        // Search for lists by title or color
+        let lists = await TodoList.query().whereILike('title', `${q}%`)
+        if (lists.length === 0) {
+          lists = await TodoList.query().whereILike('color', `${q}`)
+        }
+        // Return the todo lists
+        return response.status(200).send({ lists })
+      }
+      // If there is no search query, fetch all todo lists
+      const todoLists = await TodoList.all()
 
-    // Return the todo lists
-    return response.status(200).send({ lists })
+      // Return the todo lists
+      return response.status(200).send({ lists: todoLists })
+    } catch (error: unknown) {
+      console.log(error)
+      return response.status(500).send({ message: 'Server Error' })
+    }
   }
 
   /**
@@ -35,6 +52,8 @@ export default class TodoListsController {
       return response.status(500).send({ message: 'Server Error' })
     }
   }
+
+
 
   /**
    * Edit individual record
