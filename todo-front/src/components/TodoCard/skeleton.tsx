@@ -26,7 +26,7 @@ export function TodoCardSkeleton() {
         <div className="flex gap-3 items-center">
           <Skeleton className="w-4 h-4 bg-gray-300 rounded" />
           {/* Skeleton for pencil icon */}
-          <Skeleton className="w-8 h-8 bg-gray-300 rounded" />
+          <Skeleton className="w-4 h-4 bg-gray-300 rounded" />
           {/* Skeleton for color palette */}
         </div>
         <Skeleton className="w-4 h-4 bg-gray-300 rounded" />
