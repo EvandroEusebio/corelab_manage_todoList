@@ -11,27 +11,23 @@ import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 // Definir o esquema de validação com Zod
-const todoSchema = z.object({
+const taskSchema = z.object({
   title: z.string().min(1, { message: "Título é obrigatório" }),
   notes: z.string().min(1, { message: "Nota é obrigatória" }),
   is_favorited: z.boolean(),
 });
 
-type TodoFormData = z.infer<typeof todoSchema>;
+type TaskFormType = z.infer<typeof taskSchema>;
 
 function TodoInput() {
   const [isFavorite, setIfavorite] = useState(false);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   // Configurar o React Hook Form com Zod
-  const todoForm = useForm<z.infer<typeof todoSchema>>({
-    resolver: zodResolver(todoSchema),
+  const todoForm = useForm<z.infer<typeof taskSchema>>({
+    resolver: zodResolver(taskSchema),
     defaultValues: {
       title: "",
       notes: "",
@@ -54,15 +50,15 @@ function TodoInput() {
     todoForm.setValue("is_favorited", changeFavoritedStatus);
   };
 
-  // Função de submissão
-  const onSubmit = (data: TodoFormData) => {
+  // Função de envio do formulário
+  const onSubmit = (data: TaskFormType) => {
     console.log(data);
     setLoading(true);
     createTodoList(data)
       .then((response) => {
         console.log(response.statusText);
         toast.success("Lista de tarefa criada com sucesso!");
-        window.history.replaceState(null, "", "/"); // clean search params
+        window.history.replaceState(null, "", "/"); // limpar parametros de url
         window.location.reload();
       })
       .catch((error) => {

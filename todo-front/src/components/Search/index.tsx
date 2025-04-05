@@ -8,19 +8,20 @@ function Search({ className }: ComponentProps<"search">) {
   const router = useRouter();
   const [inputValue, setValue] = useState("");
 
-  // handle input change
+  // lidar com a mudança de valor do input
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
     setValue(inputValue);
   };
 
-  // handle input key press
+  // função para lidar com a pesquisa
   const handleSearch = () => {
     if (inputValue) return router.push(`/?q=${inputValue}`);
 
     if (!inputValue) return router.push("/");
   };
 
+  // função para lidar com o pressionamento da tecla Enter
   const handleKeyPress = (event: { key: any }) => {
     if (event.key === "Enter") return handleSearch();
   };

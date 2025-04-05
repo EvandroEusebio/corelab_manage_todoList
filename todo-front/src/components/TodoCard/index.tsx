@@ -3,14 +3,14 @@ import PencilIcon from "@/assets/icons/pencilIcon";
 import StarIcon from "@/assets/icons/starIcon";
 import XIcon from "@/assets/icons/xIcon";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
+import deleteTodoList from "@/service/routesAPI/todoList/delete";
 import editTodoList from "@/service/routesAPI/todoList/edit";
 import { TodoListInterface } from "@/types/todo_list_type";
 import { useState } from "react";
 import { toast } from "sonner";
 import PaletteColor from "../PaletteColor";
-import deleteTodoList from "@/service/routesAPI/todoList/delete";
-import { Toggle } from "../ui/toggle";
 import { Textarea } from "../ui/textarea";
+import { Toggle } from "../ui/toggle";
 
 export function TodoCard({
   id,
@@ -24,7 +24,7 @@ export function TodoCard({
   const [enableNoteEdit, setEnableNoteEdit] = useState(true);
   const [newNote, setNewNote] = useState(notes);
 
-  // edite color todo list
+  // Editar a cor da lista de tarefas
   const handleEditColorTodoList = async (color: string) => {
     setColorCard(color);
     await editTodoList(
@@ -34,17 +34,17 @@ export function TodoCard({
       id
     )
       .then((res) => {
-        console.log("Todo list color updated:", res.statusText);
+        console.log("Cor da lista de tarefas atualizada:", res.statusText);
         toast.success("Cor da task editada com sucesso!");
       })
       .catch((error) => {
-        console.error("Error updating todo list color:", error);
+        console.error("Erro ao atualizar a cor da lista de tarefas:", error);
         setColorCard("#FFFFFF");
       });
   };
 
-  // edite note todo list
-  const handleEditNote = async (note: string) => {
+  // Editar a nota
+  const handleEditDescriptionText = async (note: string) => {
     await editTodoList(
       {
         notes: note,
@@ -52,29 +52,30 @@ export function TodoCard({
       id
     )
       .then((res) => {
-        console.log("Todo list note updated:", res.statusText);
+        console.log("Nota da lista de tarefas atualizada:", res.statusText);
         toast.success("Nota editada com sucesso!");
       })
       .catch((error) => {
-        console.error("Error updating todo list Note:", error);
+        console.error("Erro ao atualizar a nota da lista de tarefas:", error);
         toast.error("Não é possível editar a nota");
       });
   };
 
-  const handleDeleteTodoList = async () => {
+  // Deletar a tarefa
+  const handleDeleteTask = async () => {
     await deleteTodoList(id)
       .then((response) => {
-        console.log("Task deleted:", response.statusText);
-        toast.success("Task deleted with sucess!");
+        console.log("Tarefa deletada:", response.statusText);
+        toast.success("Tarefa deletada com sucesso!");
         window.location.reload();
       })
       .catch((error) => {
-        console.error("Error deleting task:", error);
-        toast.error("Error deleting task");
+        console.error("Erro ao deletar a tarefa:", error);
+        toast.error("Erro ao deletar a tarefa");
       });
   };
 
-  // Função para editar a tarefa como favorita
+  // Editar a tarefa como favorita
   const handleFavoritedTask = async (favoriteValue: boolean) => {
     await editTodoList(
       {
@@ -83,30 +84,30 @@ export function TodoCard({
       id
     )
       .then((res) => {
-        console.log("Todo list updated:", res.statusText);
+        console.log("Lista de tarefas atualizada:", res.statusText);
         toast.success("Nota editada com sucesso!");
         window.location.reload();
       })
       .catch((error) => {
-        console.error("Error updating todo:", error);
+        console.error("Erro ao atualizar a lista de tarefas:", error);
         toast.error("Não foi possível editar a nota");
       });
   };
 
-  // Função para alternar o estado do favorito
+  // Alternar o estado de favorito
   const handleFavorite = () => {
     let favoriteValue = !isFavorite;
     setIsFavorite(favoriteValue);
     handleFavoritedTask(favoriteValue);
   };
 
-  // Função para tratar a mudança de estado do Toggle e salvar a nota quando desmarcado
+  // Alternar o estado do Toggle e salvar a nota quando desmarcado
   const handleToggleEditNoteChange = () => {
     setEnableNoteEdit(!enableNoteEdit);
-    // When the Toggle is unchecked (i.e. from editable to non-editable),
-    // the note is automatically saved.
+    // Quando o Toggle é desmarcado (de editável para não editável),
+    // a nota é automaticamente salva.
     if (!enableNoteEdit && newNote !== notes) {
-      handleEditNote(newNote); // Save the note when the Toggle is unchecked
+      handleEditDescriptionText(newNote); // Salvar a nota quando o Toggle é desmarcado
     }
   };
 
@@ -152,7 +153,7 @@ export function TodoCard({
         <XIcon
           className="w-[13px] h-[13px] cursor-pointer"
           color="#9E9E9E"
-          onClick={() => handleDeleteTodoList()}
+          onClick={() => handleDeleteTask()}
         />
       </CardFooter>
     </Card>

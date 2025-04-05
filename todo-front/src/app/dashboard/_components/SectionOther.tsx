@@ -6,8 +6,7 @@ import useTodoListStore from "@/features/store/todoListStore";
 function SectionOther() {
   const { loading, todoList } = useTodoListStore();
   
-
-  // filter out the favorite lists
+  // Filtrar a lista de tarefas para mostrar apenas as não favoritas
   const filteredTodoList = todoList.filter((list) => !list.isFavorited);
 
   return (

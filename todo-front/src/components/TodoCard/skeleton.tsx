@@ -12,9 +12,7 @@ export function TodoCardSkeleton() {
       <CardHeader>
         <div className="flex items-center border-b-1 pb-4 px-4 justify-between">
           <Skeleton className="w-2/3 h-4 bg-gray-300 rounded" />
-          {/* Skeleton for the title */}
           <Skeleton className="w-4 h-4 bg-gray-300 rounded" />
-          {/* Skeleton for the star icon */}
         </div>
       </CardHeader>
 
@@ -25,12 +23,9 @@ export function TodoCardSkeleton() {
       <CardFooter className="flex justify-between">
         <div className="flex gap-3 items-center">
           <Skeleton className="w-4 h-4 bg-gray-300 rounded" />
-          {/* Skeleton for pencil icon */}
           <Skeleton className="w-4 h-4 bg-gray-300 rounded" />
-          {/* Skeleton for color palette */}
         </div>
         <Skeleton className="w-4 h-4 bg-gray-300 rounded" />
-        {/* Skeleton for X icon */}
       </CardFooter>
     </Card>
   );

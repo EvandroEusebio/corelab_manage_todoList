@@ -6,10 +6,9 @@ import useTodoListStore from "@/features/store/todoListStore";
 function SectionFavorite() {
   const { loading, todoList } = useTodoListStore();
 
-  // filter out the favorite lists
+  // Filtrar a lista de tarefas para mostrar apenas as favoritas
   const filteredTodoList = todoList.filter((list) => list.isFavorited);
 
-  //console.log("filteredTodoList: ", filteredTodoList);
 
   return (
     <div className="space-y-1.5">
