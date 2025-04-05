@@ -9,6 +9,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import PaletteColor from "../PaletteColor";
 import deleteTodoList from "@/service/routesAPI/todoList/delete";
+import { Toggle } from "../ui/toggle";
+import { Textarea } from "../ui/textarea";
 
 export function TodoCard({
   id,
@@ -17,12 +19,10 @@ export function TodoCard({
   notes,
   is_favorited,
 }: TodoListInterface) {
-  const [isFavorite, setIfavorite] = useState(is_favorited);
+  const [isFavorite, setIsFavorite] = useState(is_favorited);
   const [colorCard, setColorCard] = useState(color);
-
-  const handleFavorite = () => {
-    setIfavorite(!isFavorite);
-  };
+  const [enableNoteEdit, setEnableNoteEdit] = useState(true);
+  const [newNote, setNewNote] = useState(notes);
 
   // edite color todo list
   const handleEditColorTodoList = async (color: string) => {
@@ -43,6 +43,24 @@ export function TodoCard({
       });
   };
 
+  // edite note todo list
+  const handleEditNote = async (note: string) => {
+    await editTodoList(
+      {
+        notes: note,
+      },
+      id
+    )
+      .then((res) => {
+        console.log("Todo list note updated:", res.statusText);
+        toast.success("Nota editada com sucesso!");
+      })
+      .catch((error) => {
+        console.error("Error updating todo list Note:", error);
+        toast.error("Não é possível editar a nota");
+      });
+  };
+
   const handleDeleteTodoList = async () => {
     await deleteTodoList(id)
       .then((response) => {
@@ -54,6 +72,42 @@ export function TodoCard({
         console.error("Error deleting task:", error);
         toast.error("Error deleting task");
       });
+  };
+
+  // Função para editar a tarefa como favorita
+  const handleFavoritedTask = async (favoriteValue: boolean) => {
+    await editTodoList(
+      {
+        is_favorited: favoriteValue,
+      },
+      id
+    )
+      .then((res) => {
+        console.log("Todo list updated:", res.statusText);
+        toast.success("Nota editada com sucesso!");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error updating todo:", error);
+        toast.error("Não foi possível editar a nota");
+      });
+  };
+
+  // Função para alternar o estado do favorito
+  const handleFavorite = () => {
+    let favoriteValue = !isFavorite;
+    setIsFavorite(favoriteValue);
+    handleFavoritedTask(favoriteValue);
+  };
+
+  // Função para tratar a mudança de estado do Toggle e salvar a nota quando desmarcado
+  const handleToggleEditNoteChange = () => {
+    setEnableNoteEdit(!enableNoteEdit);
+    // When the Toggle is unchecked (i.e. from editable to non-editable),
+    // the note is automatically saved.
+    if (!enableNoteEdit && newNote !== notes) {
+      handleEditNote(newNote); // Save the note when the Toggle is unchecked
+    }
   };
 
   return (
@@ -73,13 +127,26 @@ export function TodoCard({
       </div>
 
       <CardContent className="h-80 font-normal px-4 text-[13px]">
-        <div>
-          <p>{notes}</p>
-        </div>
+        <Textarea
+          className="w-full h-full border-none px-4 text-[13px] focus-visible:border-none focus-visible:ring-[none] resize-none font-light shadow-none"
+          defaultValue={notes}
+          onChange={(e) => setNewNote(e.target.value)}
+          disabled={enableNoteEdit}
+        />
       </CardContent>
       <CardFooter className="flex justify-between">
         <div className="flex gap-3 items-center">
-          <PencilIcon className="w-4 h-4 cursor-pointer" />
+          <Toggle
+            onClick={handleToggleEditNoteChange}
+            className={`cursor-pointer hover:bg-[#ffe3b388] rounded-full 
+            ${
+              enableNoteEdit ? "bg-transparent" : "data-[state=on]:bg-[#FFE3B3]"
+            } 
+            transition-colors duration-300 ease-in-out`}
+          >
+            <PencilIcon className="w-4 h-4 cursor-pointer" />
+          </Toggle>
+
           <PaletteColor onChangeColorCard={handleEditColorTodoList} />
         </div>
         <XIcon
