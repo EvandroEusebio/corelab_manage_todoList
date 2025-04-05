@@ -49,12 +49,18 @@ Certifique-se de ter instalado:
 
 ## 🛠️ **Como Configurar o Projeto**
 
-### **Backend**
-
-1. Clone o repositório:
+Clone o repositório:
 
 ```bash
    git clone https://github.com/EvandroEusebio/corelab_manage_todoList.git
+   cd corelab_manage_todoList
+```
+
+### **Backend**
+
+1. Acesse a pasta do projecto backEnd:
+
+```bash
    cd todo-back
 ```
 
@@ -92,12 +98,13 @@ node ace migration:run
 npm run dev ou pnpm run dev
 ```
 
+
+
 ### **Frontend**
 
-1. Clone o repositório:
+1. Acesse a pasta do projecto FrontEnd:
 
 ```bash
-   git clone https://github.com/EvandroEusebio/corelab_manage_todoList.git
    cd todo-front
 ```
 
